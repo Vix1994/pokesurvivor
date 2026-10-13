@@ -1,11 +1,20 @@
 # PokéSurvivor · Mundo Misterioso
 
+## 关于此 fork
+
+本仓库是 [JPTER78/pokesurvivor](https://github.com/JPTER78/pokesurvivor) 的简体中文本地化 fork，中文支持相关改动维护在 [Vix1994/pokesurvivor](https://github.com/Vix1994/pokesurvivor)。原游戏由上游项目开发，素材来源、作者署名与许可见 [CREDITS.md](CREDITS.md) 和 [LICENSE](LICENSE)。
+
+仓库保留 `pokesurvivor` 名称，便于识别原项目，并通过本 README 标明中文支持的差异。此 fork 保留原项目历史，可通过 `upstream` 远端同步上游更新。
+
+## 简体中文支持
+
 这个 fork 已加入**简体中文**。登录界面下拉菜单或「设置 → 画面 → 语言」可选择 Español、English、简体中文；选择会保存在本机，首次使用会识别浏览器语言。更改语言会重新加载，请先结束当前对局。
 
 中文覆盖游戏菜单、性格测试、招式与道具、任务与成就、合作提示、战斗 HUD、历史更新日志和全部 966 只可玩宝可梦的名称。可直接打开 `index.html` 离线游玩，也可运行 `python -m http.server 8765` 后访问本地网页。独立的指南与 SEO 页面仍为西班牙语 / 英语。
 
-翻译维护与验证方法见 [docs/I18N.md](docs/I18N.md)。
+玩家昵称在提示、确认窗口和合作战斗界面中保留原样；一般属性、普通形态、摇杆大小和招式快捷栏等标签按各自语境翻译。翻译维护与验证方法见 [docs/I18N.md](docs/I18N.md)。
 
+## 原项目说明
 
 Bullet-heaven con Pokémon al estilo de Survivor.io y Megabonk, con sprites de
 *Pokémon Mundo Misterioso*, capa roguelike, **966 Pokémon de las 9 generaciones**,
