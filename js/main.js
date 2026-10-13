@@ -10,7 +10,8 @@
     const miss = NEED.filter(k => !window.G || !G[k]);
     if (!miss.length) return false;
     const el = document.getElementById('boot');
-    el.innerHTML = 'No se pudo cargar todo el juego (¿se cortó la conexión?).<br><button class="btn gold" style="margin-top:12px" onclick="location.reload()">Recargar</button>';
+    const t = window.G && G.I18n ? G.I18n.t : s => s;
+    el.innerHTML = t('No se pudo cargar todo el juego (¿se cortó la conexión?).') + '<br><button class="btn gold" style="margin-top:12px" onclick="location.reload()">' + t('Recargar') + '</button>';
     console.warn('[Arranque] faltan:', miss.join(', '));
     return true;
   }
@@ -21,15 +22,12 @@
   const MAINTENANCE = false;
   function maintenance() {
     if (!MAINTENANCE || /[?&]dev\b/.test(location.search)) return false;
-    const en = window.G && G.I18n ? G.I18n.lang === 'en' : !/^es/i.test(navigator.language || '');
+    const t = window.G && G.I18n ? G.I18n.t : s => s;
     const el = document.getElementById('boot');
     el.setAttribute('translate', 'no');
-    el.innerHTML = '<div class="boot-in"><h1>PokéSurvivor</h1>' + (en
-      ? '<p><b>We are under maintenance.</b></p><p>We are moving the game to new servers so it can stay free for everyone. ' +
-        'Your account, your save and your Pokémon are safe. Please come back in a few hours!</p>'
-      : '<p><b>Estamos en mantenimiento.</b></p><p>Estamos mudando el juego a servidores nuevos para que siga siendo gratis para todos. ' +
-        'Tu cuenta, tu partida y tus Pokémon están a salvo. ¡Vuelve en unas horas!</p>') +
-      '<button class="btn gold" style="margin-top:12px" onclick="location.reload()">' + (en ? 'Try again' : 'Volver a intentarlo') + '</button></div>';
+    el.innerHTML = '<div class="boot-in"><h1>PokéSurvivor</h1><p><b>' + t('Estamos en mantenimiento.') +
+      '</b></p><p>' + t('Estamos mudando el juego a servidores nuevos para que siga siendo gratis para todos. Tu cuenta, tu partida y tus Pokémon están a salvo. ¡Vuelve en unas horas!') +
+      '</p><button class="btn gold" style="margin-top:12px" onclick="location.reload()">' + t('Volver a intentarlo') + '</button></div>';
     return true;
   }
 

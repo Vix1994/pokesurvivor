@@ -11,10 +11,10 @@ G.RankingUI = (() => {
 
   function init() {
     const dl = $('rk-dl');
-    dl.innerHTML = G.DEX.map(p => `<option value="${esc(p.name)}">`).join('');
+    dl.innerHTML = G.DEX.map(p => `<option value="${esc(G.T(p.name))}">`).join('');
     $('rk-poke').onchange = () => {
       const v = $('rk-poke').value.trim().toLowerCase();
-      const p = G.DEX.find(x => x.name.toLowerCase() === v);
+      const p = G.DEX.find(x => x.name.toLowerCase() === v || G.T(x.name).toLowerCase() === v);
       if (!v) { setDex(null); return; }
       if (!p) { G.UI.toast('No hay ningún Pokémon con ese nombre'); return; }
       setDex(p.dex);
@@ -87,19 +87,31 @@ G.RankingUI = (() => {
     const b = G.Ranking.board(mode, period, dex), done = G.Ranking.reported();
     rows.forEach((r, i) => list.appendChild(rowEl(r, i + 1, r.uids.includes(uid), b, done)));
 
-    // La frase se monta en cada idioma (traducirla por trozos sale rara).
-    const en = G.I18n.lang === 'en';
-    const pn = en ? { d: 'today', w: 'this week', m: 'this month', y: 'this year', a: 'of all time' }[period]
-                  : { d: 'de hoy', w: 'de esta semana', m: 'de este mes', y: 'de este año', a: 'de siempre' }[period];
-    const mon = dex ? G.DEX_BY[dex].name : '';
-    const where = en ? (mode === 's' ? 'solo' : 'group') + (dex ? ' with ' + mon : '')
-                     : (mode === 's' ? 'en solitario' : 'en grupo') + (dex ? ' con ' + mon : '');
-    $('rk-me').innerHTML = !G.Social.me ? 'Elige un apodo (en Amigos) para salir en el ranking.'
-      : me && me.out ? (en ? `<span translate="no">You're not in the top 50 ${where} ${pn} yet. Your exact rank is in All-time.</span>`
-                           : `Aún no estás en el top 50 ${pn} ${where}. Tu puesto exacto está en Histórico.`)
-      : me ? (en ? `<span translate="no">Your best ${where} rank ${pn}: <b class="gold">#${me.pos}</b> · ${fmt(me.t)}</span>`
-                 : `Tu mejor puesto ${pn} ${where}: <b class="gold">#${me.pos}</b> · ${fmt(me.t)}`)
-      : (en ? `<span translate="no">You don't have a ${where} record ${pn} yet.</span>` : `Aún no tienes marca ${pn} ${where}.`);
+    // Build the complete sentence for each locale; player data is escaped separately.
+    const lang = G.I18n.lang;
+    const mon = dex ? esc(G.T(G.DEX_BY[dex].name)) : '';
+    const periods = {
+      es: { d: 'de hoy', w: 'de esta semana', m: 'de este mes', y: 'de este año', a: 'de siempre' },
+      en: { d: 'today', w: 'this week', m: 'this month', y: 'this year', a: 'of all time' },
+      'zh-CN': { d: '今日', w: '本周', m: '本月', y: '本年', a: '历史' }
+    };
+    const pn = periods[lang][period];
+    const where = lang === 'zh-CN' ? (mode === 's' ? '单人' : '组队') + (dex ? ' · ' + mon : '')
+      : lang === 'en' ? (mode === 's' ? 'solo' : 'group') + (dex ? ' with ' + mon : '')
+      : (mode === 's' ? 'en solitario' : 'en grupo') + (dex ? ' con ' + mon : '');
+    const rank = me ? `<b class="gold">#${me.pos}</b> · ${fmt(me.t)}` : '';
+    let message;
+    if (!G.Social.me) message = G.T('Elige un apodo (en Amigos) para salir en el ranking.');
+    else if (lang === 'zh-CN') message = me && me.out
+      ? `你尚未进入${pn}${where}前 50 名。准确名次可在历史榜查看。`
+      : me ? `你的${pn}${where}最佳排名：${rank}` : `你还没有${pn}${where}纪录。`;
+    else if (lang === 'en') message = me && me.out
+      ? `You're not in the top 50 ${where} ${pn} yet. Your exact rank is in All-time.`
+      : me ? `Your best ${where} rank ${pn}: ${rank}` : `You don't have a ${where} record ${pn} yet.`;
+    else message = me && me.out
+      ? `Aún no estás en el top 50 ${pn} ${where}. Tu puesto exacto está en Histórico.`
+      : me ? `Tu mejor puesto ${pn} ${where}: ${rank}` : `Aún no tienes marca ${pn} ${where}.`;
+    $('rk-me').innerHTML = `<span translate="no">${message}</span>`;
   }
 
   function rowEl(r, pos, mine, b, done) {

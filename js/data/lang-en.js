@@ -557,3 +557,16 @@ G.I18n.add({
   'Ya has reportado esta marca': 'You already reported this record',
   '¿Reportar la marca de {x} como trampa?': "Report {x}'s record as cheating?", 'Gracias: la revisaremos': 'Thanks: we will review it'
 });
+
+G.I18n.add({
+  "Termina la partida antes de cambiar el idioma.": "Finish your run before changing the language.",
+  "No se pudo guardar el idioma. Permite el almacenamiento del navegador.": "Could not save the language. Allow browser storage.",
+  "El juego se recarga al cambiarlo. Termina la partida antes de cambiar el idioma.": "The game reloads when you change it. Finish your run before changing the language.",
+  "Estamos en mantenimiento.": "We are under maintenance.",
+  "Estamos mudando el juego a servidores nuevos para que siga siendo gratis para todos. Tu cuenta, tu partida y tus Pokémon están a salvo. ¡Vuelve en unas horas!": "We are moving the game to new servers so it can stay free for everyone. Your account, your save and your Pokémon are safe. Please come back in a few hours!",
+  "Volver a intentarlo": "Try again"
+});
+
+G.I18n.add({ 'Nv. {x}': 'Lv. {x}' });
+
+G.I18n.add({ 'Nv.{x}': 'Lv. {x}' });

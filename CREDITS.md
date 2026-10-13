@@ -129,6 +129,10 @@ uso **no comercial** y con atribución a sus artistas.
 Stats base y nombres en español: [PokeAPI](https://pokeapi.co/),
 descargados una vez y guardados en `js/data/pokedex.js`.
 
+Nombres en chino simplificado: [PokeAPI, pokemon_species_names.csv](https://github.com/PokeAPI/pokeapi/blob/master/data/v2/csv/pokemon_species_names.csv),
+idioma 12 (`zh-Hans`), guardados en `js/data/pokemon-names-zh-CN.js`.
+Se usan sólo para la presentación; los IDs y el formato del guardado no cambian.
+
 ## Fuente
 
 [Pixelify Sans](https://github.com/eifetx/Pixelify-Sans) (SIL Open Font License 1.1,

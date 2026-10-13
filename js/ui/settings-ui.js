@@ -74,10 +74,10 @@ G.SettingsUI = (() => {
       G.UI.soundControls($('set-sound'));
     } else if (tab === 'gfx') {
       const auto = ['baja', 'media', 'alta'][G.Settings.autoLevel];
-      box.innerHTML = section('Idioma', 'El juego se recarga al cambiarlo.')
-        + `<div class="chips set-chips" translate="no">${[['es', 'Español'], ['en', 'English']].map(([v, l]) =>
+      box.innerHTML = section('Idioma', 'El juego se recarga al cambiarlo. Termina la partida antes de cambiar el idioma.')
+        + `<div class="chips set-chips" translate="no">${G.I18n.locales.map(({ code: v, name: l }) =>
              `<button class="chip ${G.I18n.lang === v ? 'on' : ''}" data-lang="${v}">${l}</button>`).join('')}</div>`
-        + section('Calidad', 'Cuántos efectos y partículas se dibujan. <b>Auto</b> la baja sola si el juego va a tirones (ahora: ' + auto + ').')
+        + section('Calidad', G.I18n.f('Cuántos efectos y partículas se dibujan. {x} la baja sola si el juego va a tirones (ahora: {x}).', '<b>' + G.T('Auto') + '</b>', G.T(auto)))
         + choice('quality', [['auto', 'Auto'], ['high', 'Alta'], ['mid', 'Media'], ['low', 'Baja']])
         + section('Pantalla')
         + toggle('dmgNumbers', 'Números de daño', 'Los números que salen al golpear y al recibir daño.')

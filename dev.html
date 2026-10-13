@@ -3,6 +3,7 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
+<script src="js/core/language.js"></script>
 <meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>PokéSurvivor – Juego Pokémon gratis online estilo Survivor.io</title>
@@ -93,6 +94,7 @@
       <div class="t1">PokéSurvivor</div>
       <div class="t2">Mundo Misterioso</div>
     </div>
+    <div class="language-picker"><label for="login-language">Idioma</label><select id="login-language" data-language-select translate="no" aria-label="Idioma"></select></div>
     <p class="login-tag">Sobrevive a las hordas con tu compañero Pokémon · gratis, en PC y móvil</p>
     <div class="tabs">
       <div class="tab on" data-tab="login">Entrar</div>
@@ -287,14 +289,15 @@
 </div>
 <script>
   (function () {
-    var s = null; try { s = localStorage.getItem('ps.lang'); } catch (e) {}
-    var n = ((navigator.languages && navigator.languages[0]) || navigator.language || 'es').toLowerCase();
-    var l = s === 'es' || s === 'en' ? s : (/\/en(\/|$)/.test(location.pathname) ? 'en' : (n.indexOf('es') === 0 ? 'es' : 'en'));
-    document.documentElement.lang = l;
+    var l = window.PSLanguage.lang;
     if (l === 'en') {
       var p = document.querySelectorAll('#boot p');
       p[0].textContent = 'A Pokémon survival game, free in your browser and on mobile.';
       p[1].textContent = 'Loading…';
+    } else if (l === 'zh-CN') {
+      var p = document.querySelectorAll('#boot p');
+      p[0].textContent = '宝可梦生存游戏，电脑和手机浏览器均可免费游玩。';
+      p[1].textContent = '正在加载…';
     }
   })();
 </script>
@@ -543,6 +546,8 @@
 <script defer src="js/core/util.js"></script>
 <script defer src="js/core/i18n.js"></script>
 <script defer src="js/data/lang-en.js"></script>
+<script defer src="js/data/lang-zh-CN.js"></script>
+<script defer src="js/data/pokemon-names-zh-CN.js"></script>
 <script defer src="js/core/settings.js"></script>
 <script defer src="js/data/music.js"></script>
 <script defer src="js/data/pokedex.js"></script>

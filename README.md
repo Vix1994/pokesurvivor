@@ -1,5 +1,12 @@
 # PokéSurvivor · Mundo Misterioso
 
+这个 fork 已加入**简体中文**。登录界面下拉菜单或「设置 → 画面 → 语言」可选择 Español、English、简体中文；选择会保存在本机，首次使用会识别浏览器语言。更改语言会重新加载，请先结束当前对局。
+
+中文覆盖游戏菜单、性格测试、招式与道具、任务与成就、合作提示、战斗 HUD、历史更新日志和全部 966 只可玩宝可梦的名称。可直接打开 `index.html` 离线游玩，也可运行 `python -m http.server 8765` 后访问本地网页。独立的指南与 SEO 页面仍为西班牙语 / 英语。
+
+翻译维护与验证方法见 [docs/I18N.md](docs/I18N.md)。
+
+
 Bullet-heaven con Pokémon al estilo de Survivor.io y Megabonk, con sprites de
 *Pokémon Mundo Misterioso*, capa roguelike, **966 Pokémon de las 9 generaciones**,
 shinies y gacha por región. Música y efectos compuestos para el juego.

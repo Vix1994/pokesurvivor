@@ -1,6 +1,6 @@
-/* ============ i18n.js — idiomas (español / inglés) ============
- * El juego está escrito en español. Si el idioma es inglés, todo texto que
- * se enseña se traduce con el diccionario de js/data/lang-en.js, sin tener que
+/* ============ i18n.js — idiomas (español / inglés / 简体中文) ============
+ * El juego está escrito en español. Los otros idiomas traducen el texto
+ * con su diccionario en js/data/lang-*.js, sin tener que
  * tocar cada pantalla:
  *   - el DOM (menús, cartas, avisos...) con un MutationObserver,
  *   - el canvas (HUD, avisos, números) envolviendo fillText/strokeText,
@@ -13,17 +13,13 @@
  *   3. trozos dentro de un texto más largo, sólo palabras enteras
  * Lo que escriben los jugadores (apodos) va marcado con translate="no".
  *
- * Idioma: el elegido en Ajustes; si no, /en/ en la dirección o el del navegador
- * (español si el navegador está en español, inglés en cualquier otro caso).
+ * Idioma: language.js comparte la detección entre la carga y el juego.
+ * add(dict, locale) registra sólo el diccionario del idioma activo.
  */
 G.I18n = (() => {
   const KEY = 'ps.lang';
-  let saved = null;
-  try { saved = localStorage.getItem(KEY); } catch (e) { /* nada */ }
-  const byPath = /\/en(\/|$)/.test(location.pathname) ? 'en' : null;
-  const nav = ((navigator.languages && navigator.languages[0]) || navigator.language || 'es').toLowerCase();
-  const lang = saved === 'es' || saved === 'en' ? saved : byPath || (nav.startsWith('es') ? 'es' : 'en');
-  document.documentElement.lang = lang;
+  const { locales, valid, lang } = window.PSLanguage;
+  const locale = locales.find(l => l.code === lang).locale;
 
   const exact = new Map(), exactLow = new Map();
   let patterns = [], frag = null, fragLow = null, fragMap = new Map();
@@ -32,7 +28,8 @@ G.I18n = (() => {
   const reEsc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
   /** Añade traducciones { 'texto en español': 'English text' }. */
-  function add(dict) {
+  function add(dict, language = 'en') {
+    if (language !== lang) return;
     const fr = [];
     for (const [es, en] of Object.entries(dict)) {
       if (!en || es === en) continue;
@@ -126,10 +123,11 @@ G.I18n = (() => {
   }
 
   function startDom() {
+    initSelectors();
     if (lang === 'es') return;
     // Los enlaces a las páginas de la web, a su versión en inglés.
     const EN_LINKS = { 'guia/': 'en/guide/', 'pokedex/': 'en/pokedex/' };
-    document.querySelectorAll('a[href]').forEach(a => { const h = a.getAttribute('href'); if (EN_LINKS[h]) a.setAttribute('href', EN_LINKS[h]); });
+    if (lang === 'en') document.querySelectorAll('a[href]').forEach(a => { const h = a.getAttribute('href'); if (EN_LINKS[h]) a.setAttribute('href', EN_LINKS[h]); });
     walk(document.body);
     new MutationObserver(ms => {
       for (const m of ms) {
@@ -153,11 +151,39 @@ G.I18n = (() => {
     window.alert = s => oa.call(window, t(s));
   }
 
-  function set(l) {
-    try { localStorage.setItem(KEY, l); } catch (e) { /* nada */ }
+  // Changing language reloads menus; never interrupt an active run or lose its rewards.
+  async function set(l) {
+    if (!valid(l) || l === lang) return false;
+    if (G.Game && G.Game.state !== 'ui') {
+      window.alert(t('Termina la partida antes de cambiar el idioma.'));
+      return false;
+    }
+    try {
+      localStorage.setItem(KEY, l);
+    } catch (e) {
+      window.alert(t('No se pudo guardar el idioma. Permite el almacenamiento del navegador.'));
+      return false;
+    }
+    if (G.DB && G.DB.flush) {
+      try { await Promise.race([G.DB.flush(), new Promise(r => setTimeout(r, 6000))]); } catch (e) { /* local save remains */ }
+    }
     location.reload();
+    return true;
   }
 
-  return { lang, add, t, f, set, startDom, walk };
+  function initSelectors() {
+    document.querySelectorAll('[data-language-select]').forEach(select => {
+      select.innerHTML = locales.map(l => `<option value="${l.code}">${l.name}</option>`).join('');
+      select.value = lang;
+      select.setAttribute('aria-label', t('Idioma'));
+      select.onchange = async () => {
+        select.disabled = true;
+        try { await set(select.value); } finally { select.value = lang; select.disabled = false; }
+      };
+    });
+  }
+
+  return { lang, locale, locales, add, t, f, set, startDom, walk };
+
 })();
 G.T = G.I18n.t;
