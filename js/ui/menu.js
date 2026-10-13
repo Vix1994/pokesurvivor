@@ -191,7 +191,7 @@ G.MenuUI = (() => {
     box.innerHTML = `
       <canvas id="dex-big" class="stage" width="220" height="190"></canvas>
       ${hasSh ? `<div class="seg">
-          <button class="${viewShiny ? '' : 'on'}" data-v="0">Normal</button>
+          <button class="${viewShiny ? '' : 'on'}" data-v="0">${G.I18n.c('variant', 'Normal')}</button>
           <button class="${viewShiny ? 'on' : ''}" data-v="1">${G.Icons.html('shiny', 12)} Shiny</button></div>` : ''}
       <div class="center">
         <div style="color:var(--muted);font-size:13px">Nº ${String(p.dex).padStart(3, '0')} · ${GEN_NAMES[p.gen - 1]}</div>
@@ -307,7 +307,7 @@ G.MenuUI = (() => {
     el.innerHTML = `<b>Atajos de movimientos</b>
       <p class="sub" style="margin:2px 0 8px">Elige qué movimiento va siempre en cada hueco (teclas 1-4 o los iconos de abajo), para la memoria muscular. Si aún no tienes tantos movimientos, va al hueco más cercano.</p>
       <div class="bind-slots">${[0, 1, 2, 3].map(i => `<label class="bind-slot"><span>${i + 1}</span>
-        <select class="field" data-slot="${i}"><option value="">Libre</option>${ids.map(id =>
+        <select class="field" data-slot="${i}"><option value="">${G.I18n.c('move-slot', 'Libre')}</option>${ids.map(id =>
           `<option value="${id}" ${list[i] === id ? 'selected' : ''}>${G.Moves.BY_ID[id].name}</option>`).join('')}</select></label>`).join('')}</div>`;
     el.querySelectorAll('select[data-slot]').forEach(sel => {
       sel.onchange = () => {

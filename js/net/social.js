@@ -249,7 +249,7 @@ G.Social = (() => {
         names: { [uid]: me.name, [other]: otherName },
         at: firebase.firestore.FieldValue.serverTimestamp()
       });
-      return { ok: true, msg: 'Solicitud enviada a ' + otherName };
+      return { ok: true, msg: 'Solicitud enviada a ' + G.I18n.raw(otherName) };
     } catch (e) { return { ok: false, error: 'No se pudo enviar (' + (e.code || 'error') + ').' }; }
   }
 
@@ -260,7 +260,7 @@ G.Social = (() => {
       await fb.fs.collection('friendships').doc(f.pid).update({
         status: 'ok', at: firebase.firestore.FieldValue.serverTimestamp(), ['names.' + uid]: me.name
       });
-      return { ok: true, msg: 'Ahora eres amigo de ' + f.name };
+      return { ok: true, msg: 'Ahora eres amigo de ' + G.I18n.raw(f.name) };
     } catch (e) { return { ok: false, error: 'No se pudo aceptar (' + (e.code || 'error') + ').' }; }
   }
 
@@ -399,7 +399,7 @@ G.Social = (() => {
       await fb.fs.collection('inv').doc(other + '_' + uid).set({ to: other, from: uid, room: room.id, name: me.name, at: fts() });
     } catch (e) { return { ok: false, error: 'No se pudo invitar (' + (e.code || 'error') + ').' }; }
     sentInv.add(other);
-    return { ok: true, msg: 'Invitación enviada a ' + f.name };
+    return { ok: true, msg: 'Invitación enviada a ' + G.I18n.raw(f.name) };
   }
 
   /** Retira las invitaciones que mandaste (al salir de la sala). */

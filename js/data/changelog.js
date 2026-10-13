@@ -13,7 +13,11 @@ G.CHANGELOG = [
      'Language picker on login and in Settings: Spanish, English and Simplified Chinese. Remembers your choice and detects the browser language.']
   ], fix: [
     ['Cambiar el idioma durante una partida ya no recarga el juego: termina la partida primero.',
-     'Changing language during a run no longer reloads the game: finish the run first.']
+     'Changing language during a run no longer reloads the game: finish the run first.'],
+    ['Los apodos se conservan sin traducir en los avisos, el cooperativo y las confirmaciones, aunque coincidan con nombres de Pokémon.',
+     'Nicknames stay unchanged in messages, co-op and confirmations, even when they match Pokémon names.'],
+    ['Correcciones de la traducción china: tipo Normal, movimiento Burbuja, rebotes de ataques en cadena y opción de hueco sin movimiento fijo.',
+     'Chinese translation corrections: Normal type, Bubble, chain-attack bounces and slots without a fixed move.']
   ] },
   { d: '2026-10-13', title: ['La Sentencia de Arceus', 'The Judgment of Arceus'], new: [
     ['La Sentencia de Arceus: al llegar al minuto 30, Arceus baja del cielo y te lleva a las Ruinas del Juicio. Es invencible, te persigue cada vez más deprisa y lanza pilares de luz, rayos y ondas; si te toca, te quita casi media vida. Cada 5 segundos acude un legendario con el doble de vida y de daño que el anterior. ¿Cuánto aguantarás?',

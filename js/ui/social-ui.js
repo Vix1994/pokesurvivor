@@ -25,7 +25,7 @@
         $('nick-ok').disabled = false;
         if (!r.ok) { $('nick-err').textContent = r.error; G.Audio.sfx('error'); return; }
         G.Audio.sfx('confirm');
-        G.UI.toast('Tu apodo es ' + G.Social.me.name);
+        G.UI.toast('Tu apodo es ' + G.I18n.raw(G.Social.me.name));
         const cb = then; then = null;
         if (cb) cb(); else G.MenuUI.open();
       };
@@ -130,7 +130,7 @@
               if (r.ok) G.LobbyUI.open();
             });
           }
-          btn('Quitar', 'ghost', () => { if (confirm('¿Quitar a ' + f.name + ' de tus amigos?')) G.Social.remove(f.uid); });
+          btn('Quitar', 'ghost', () => { if (confirm('¿Quitar a ' + G.I18n.raw(f.name) + ' de tus amigos?')) G.Social.remove(f.uid); });
         }
         box.appendChild(el);
       }
@@ -193,7 +193,7 @@
       const ms = room.members;
       $('lobby-sub').textContent = room.isHost
         ? 'Eres el anfitrión. Invita a tus amigos (hasta ' + G.Social.MAX_PLAYERS + ') y empezad cuando estéis.'
-        : 'Estás en la sala de ' + ((ms.find(m => m.uid === room.host) || {}).name || '…') + '. El anfitrión empezará la partida.';
+        : 'Estás en la sala de ' + G.I18n.raw((ms.find(m => m.uid === room.host) || {}).name || '…') + '. El anfitrión empezará la partida.';
 
       // Las tarjetas sólo se rehacen si cambian los miembros (los sprites no parpadean).
       const key = ms.map(m => m.uid + ':' + m.dex + ':' + (m.shiny ? 1 : 0)).join('|');

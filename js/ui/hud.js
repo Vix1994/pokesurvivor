@@ -393,7 +393,7 @@ G.HUD = (() => {
       const o = m.pl;
       ctx.font = F(800, 10);
       ctx.fillStyle = m.color;
-      ctx.fillText(m.name, px, y + 9);
+      ctx.fillText(G.I18n.raw(m.name), px, y + 9);
       const lx = px + 78;
       bar(ctx, lx, y + 1, 110, 8, o.dead ? 0 : o.hp / o.maxHp, o.dead ? '#ff5f6d' : '#5fe08a');
       if (o.dead) {
@@ -430,11 +430,11 @@ G.HUD = (() => {
       ctx.font = F(800, 14);
       ctx.textAlign = 'center';
       ctx.fillStyle = '#fff';
-      ctx.fillText(m.name.charAt(0).toUpperCase(), 0, 5);
+      ctx.fillText(G.I18n.raw(m.name.charAt(0).toUpperCase()), 0, 5);
       // Nombre y distancia: al lado contrario de la flecha, para que no se salga
       const lx = -Math.cos(a) * 30, ly = -Math.sin(a) * 26 + 4;
       ctx.font = F(800, 12);
-      const label = (o.dead ? '¡' + m.name + ' necesita ayuda! ' : m.name + ' ') + '· ' + metres + ' m';
+      const label = (o.dead ? '¡' + G.I18n.raw(m.name) + ' necesita ayuda! ' : G.I18n.raw(m.name) + ' ') + '· ' + metres + ' m';
       ctx.textAlign = Math.cos(a) > 0.3 ? 'right' : Math.cos(a) < -0.3 ? 'left' : 'center';
       ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(0,0,0,.8)';
       ctx.strokeText(label, lx, ly);

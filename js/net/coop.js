@@ -228,7 +228,7 @@ G.Coop = (() => {
     if (!m || !m.connected) return;
     m.connected = false;
     G.Projectiles.clearOrbs(m.pl);
-    G.Spawner.say(m.name + ' ha dejado la partida', 2.6);
+    G.Spawner.say(G.I18n.raw(m.name) + ' ha dejado la partida', 2.6);
     if (waiting.has(u)) picked(u);
     if (holds.has(u)) holdOff(u);
     if (api.mateLeft) api.mateLeft(m);

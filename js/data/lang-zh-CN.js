@@ -27,7 +27,7 @@ G.I18n.add({
   "Fuego Sagrado": "神圣之火",
   "Erupción": "喷火",
   "Pistola Agua": "水枪",
-  "Burbuja": "泡泡",
+  "Burbuja": "泡沫",
   "Hidrobomba": "水炮",
   "Escaldar": "热水",
   "Hidrocañón": "加农水炮",
@@ -875,7 +875,7 @@ G.I18n.add({
   "Tamaño del joystick": "摇杆大小",
   "Cuánto hay que arrastrar el dedo.": "需要拖动手指的距离。",
   "Pequeño": "小",
-  "Normal": "普通",
+  "Normal": "一般",
   "Grande": "大",
   "o flechas": "或方向键",
   "moverse": "移动",
@@ -1037,8 +1037,8 @@ G.I18n.add({
   "+1 bumerán": "+1 个回力镖",
   "+30% alcance": "范围 +30%",
   "+1 bumerán y +40% daño": "+1 个回力镖，伤害 +40%",
-  "+2 saltos": "+2 次跳跃",
-  "+2 saltos y +40% daño": "+2 次跳跃，伤害 +40%",
+  "+2 saltos": "弹射次数 +2",
+  "+2 saltos y +40% daño": "弹射次数 +2，伤害 +40%",
   "+1 mina": "+1 个地雷",
   "+30% radio de explosión": "爆炸半径 +30%",
   "+1 mina y -25% recarga": "+1 个地雷，冷却时间 -25%",
@@ -1055,7 +1055,7 @@ G.I18n.add({
   "+3 disparos": "+3 发射击",
   "+3 disparos y +1 perforación": "+3 发射击，+1 次穿透",
   "×1,8 daño, +1 bumerán y más alcance": "伤害 ×1.8，+1 个回力镖，范围扩大",
-  "×1,7 daño y +3 saltos": "伤害 ×1.7，+3 次跳跃",
+  "×1,7 daño y +3 saltos": "伤害 ×1.7，弹射次数 +3",
   "×1,8 daño, +2 minas y explosión más grande": "伤害 ×1.8，+2 个地雷，爆炸范围扩大",
   "×1,7 daño, +2 meteoros y más radio": "伤害 ×1.7，+2 颗流星，半径扩大",
   "×1,8 daño, +1 a la vez y dispara más rápido": "伤害 ×1.8，同时存在数量 +1，射击更快",
@@ -1283,4 +1283,16 @@ G.I18n.add({
   "PokéSurvivor – Juego Pokémon gratis online estilo Survivor.io": "PokéSurvivor – 免费宝可梦生存游戏",
   "PokéSurvivor – Free online Pokémon survival game (Survivor.io style)": "PokéSurvivor – 免费宝可梦生存游戏",
   "/ mes": "/ 月"
+}, 'zh-CN');
+
+/* Labels whose meaning depends on the control displaying them. */
+G.I18n.add({
+  'variant::Normal': '普通',
+  'joystick::Normal': '标准',
+  'move-slot::Libre': '不固定'
+}, 'zh-CN');
+
+G.I18n.add({
+  'Los apodos se conservan sin traducir en los avisos, el cooperativo y las confirmaciones, aunque coincidan con nombres de Pokémon.': '提示、合作模式和确认窗口中的玩家昵称保持原样，即使与宝可梦名称相同也不会被翻译。',
+  'Correcciones de la traducción china: tipo Normal, movimiento Burbuja, rebotes de ataques en cadena y opción de hueco sin movimiento fijo.': '修正中文翻译：一般属性、泡沫招式、连锁攻击弹射次数，以及快捷栏的“不固定”选项。'
 }, 'zh-CN');

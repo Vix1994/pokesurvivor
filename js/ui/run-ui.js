@@ -75,11 +75,11 @@ G.RunUI = (() => {
   /** Cooperativo: quién falta por elegir. */
   function setWaiting(names) {
     const me = G.Social.me ? G.Social.me.name : '';
-    const others = names.filter(n => n !== me);
-    const list = a => a.length > 1 ? a.slice(0, -1).join(', ') + ' y ' + a[a.length - 1] : a[0];
+    const others = names.filter(n => n !== me).map(G.I18n.raw);
+    const list = a => new Intl.ListFormat(G.I18n.locale, { style: 'long', type: 'conjunction' }).format(a);
     $('lvl-wait').textContent = !names.length ? ''
       : !others.length ? 'Elige tu carta'
-      : names.includes(me) ? 'Faltan por elegir: ' + list([...others, 'tú'])
+      : names.includes(me) ? 'Faltan por elegir: ' + list([...others, G.T('tú')])
       : 'Esperando a ' + list(others) + '…';
   }
 

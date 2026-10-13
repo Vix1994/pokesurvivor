@@ -99,6 +99,71 @@ test('canvas drawing, canvas measurement, alert and confirm translate consistent
   assert.deepEqual(calls.alerts, ['继续', '返回']);
 });
 
+test('player names remain literal in translated templates and JSON announcements', () => {
+  for (const nav of ['zh-CN', 'en', 'es']) {
+    const { i18n } = game({ nav });
+    for (const name of ['Pikachu', 'Pikachu_12', 'Fuego', 'Normal']) {
+      const protectedName = i18n.raw(name);
+      const source = protectedName + ' ha dejado la partida';
+      // Match the co-op announcement's transport: do not translate on the sender.
+      const received = JSON.parse(JSON.stringify(['say', source, 2.6]))[1];
+      const output = i18n.t(received);
+      assert.equal(output, nav === 'zh-CN' ? name + ' 离开了游戏'
+        : nav === 'en' ? name + ' left the game' : name + ' ha dejado la partida');
+      assert.equal(i18n.t(protectedName), name);
+      assert.doesNotMatch(output, /[\uE000-\uE003]/);
+      assert.ok(i18n.t('¡' + protectedName + ' necesita ayuda! · 25 m').includes(name));
+      assert.ok(i18n.t('Pausa: esperando a ' + protectedName + ' (anfitrión)…').includes(name));
+      assert.ok(i18n.t('¿Quitar a ' + protectedName + ' de tus amigos?').includes(name));
+      assert.ok(i18n.t(i18n.f('Tu apodo es {x}', protectedName)).includes(name));
+    }
+  }
+  assert.equal(game().i18n.t('¡Has conseguido a Pikachu shiny!'), '获得了异色 皮卡丘！');
+});
+
+test('raw announcements are localized by the receiving player, not the host', () => {
+  const sender = game({ nav: 'es' }).i18n;
+  const message = JSON.parse(JSON.stringify({ text: sender.raw('Pikachu') + ' ha dejado la partida' }));
+  assert.equal(game({ nav: 'en' }).i18n.t(message.text), 'Pikachu left the game');
+  assert.equal(game({ nav: 'zh-CN' }).i18n.t(message.text), 'Pikachu 离开了游戏');
+});
+
+test('canvas and native dialogs strip raw markers in all three languages', () => {
+  for (const nav of ['zh-CN', 'en', 'es']) {
+    const { Canvas, i18n, calls, context } = game({ nav });
+    const ctx = new Canvas();
+    const name = i18n.raw('Pikachu_12');
+    ctx.fillText(name, 1, 2); ctx.strokeText(name, 3, 4); ctx.measureText(name);
+    context.alert(name); context.confirm(name);
+    assert.deepEqual(calls.canvas, [['fillText', 'Pikachu_12', 1, 2], ['strokeText', 'Pikachu_12', 3, 4], ['measureText', 'Pikachu_12']]);
+    assert.deepEqual(calls.alerts, ['Pikachu_12', 'Pikachu_12']);
+  }
+});
+
+test('type, variant, joystick and move-slot labels use the correct context', () => {
+  const { context, i18n } = game();
+  load(context, 'js/core/util.js'); load(context, 'js/ui/ui.js');
+  assert.equal(i18n.t(context.G.U.TYPE_NAME.normal), '一般');
+  assert.match(i18n.t(context.G.UI.typeChips(['normal'])), />一般<\/span>/);
+  assert.equal(i18n.c('variant', 'Normal'), '普通');
+  assert.equal(i18n.c('joystick', 'Normal'), '标准');
+  assert.equal(i18n.t('Libre'), '空位');
+  assert.equal(i18n.c('move-slot', 'Libre'), '不固定');
+  for (const nav of ['en', 'es']) {
+    const localized = game({ nav }).i18n;
+    assert.equal(localized.c('variant', 'Normal'), 'Normal');
+    assert.equal(localized.c('move-slot', 'Libre'), nav === 'en' ? 'Free' : 'Libre');
+  }
+});
+
+test('Bubble and chain-attack upgrades use accurate Chinese terminology', () => {
+  const { i18n } = game();
+  assert.equal(i18n.t('Burbuja'), '泡沫');
+  assert.equal(i18n.t('+2 saltos'), '弹射次数 +2');
+  assert.equal(i18n.t('+2 saltos y +40% daño'), '弹射次数 +2，伤害 +40%');
+  assert.equal(i18n.t('×1,7 daño y +3 saltos'), '伤害 ×1.7，弹射次数 +3');
+});
+
 test('switching persists only the locale and waits for cloud flush before reload', async () => {
   const { context, calls, i18n } = game();
   context.G.Game = { state: 'ui' };

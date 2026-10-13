@@ -226,7 +226,7 @@ G.Game = (() => {
         if (state === 'playing') state = 'held';
         if (pl && pl.bonds > 0) offerBond(true);      // si tú también tienes vínculo, eliges a la vez
         const others = holdBy.filter(n => n !== (G.Social.me && G.Social.me.name) && n !== 'Tú');
-        if (!mine && others.length) G.Spawner.say('Pausa: ' + others.join(', ') + ' ' + (others.length > 1 ? 'están eligiendo…' : 'está eligiendo…'), 999, true);
+        if (!mine && others.length) G.Spawner.say('Pausa: ' + others.map(G.I18n.raw).join(', ') + ' ' + (others.length > 1 ? 'están eligiendo…' : 'está eligiendo…'), 999, true);
       } else {
         if (state === 'held' && !awayBy) state = 'playing';
         G.Spawner.say(awayBy ? awayText() : '', awayBy ? 999 : 0, true);
@@ -245,7 +245,7 @@ G.Game = (() => {
     }
   };
   let awayBy = null;
-  const awayText = () => 'Pausa: esperando a ' + awayBy + ' (anfitrión)…';
+  const awayText = () => 'Pausa: esperando a ' + G.I18n.raw(awayBy) + ' (anfitrión)…';
 
   /** Has llevado a casa a un Pokémon perdido y se une a ti (events.js). */
   G.onRescue = (dex, name) => {

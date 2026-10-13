@@ -24,6 +24,11 @@ G.I18n = (() => {
   const exact = new Map(), exactLow = new Map();
   let patterns = [], frag = null, fragLow = null, fragMap = new Map();
   const cache = new Map();
+  // Protected display values stay strings, including when announcements cross
+  // the co-op JSON transport. Resolve them only at the DOM/canvas/dialog edge.
+  const RAW = /\uE000([\s\S]*?)\uE001/g;
+  const SLOT = /\uE002(\d+)\uE003/g;
+  function raw(value) { return '\uE000' + String(value).replace(/[\uE000-\uE003]/g, '') + '\uE001'; }
   const L = '\\p{L}\\p{N}';
   const reEsc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
@@ -55,11 +60,14 @@ G.I18n = (() => {
 
   /** Traduce un texto (sin espacios de los lados) al idioma actual. */
   function t(s) {
-    if (lang === 'es' || !s || typeof s !== 'string') return s;
-    if (!/\p{L}/u.test(s)) return s;
+    if (!s || typeof s !== 'string') return s;
+    if (lang === 'es' && !s.includes('\uE000')) return s;
     const c = cache.get(s);
     if (c !== undefined) return c;
-    let r = core(s);
+    const values = [];
+    const masked = s.replace(RAW, (_, value) => { values.push(value); return '\uE002' + (values.length - 1) + '\uE003'; });
+    let r = lang === 'es' || !/\p{L}/u.test(masked) ? masked : core(masked);
+    r = r.replace(SLOT, (match, i) => values[i] === undefined ? match : values[i]);
     if (cache.size > 4000) cache.clear();
     cache.set(s, r);
     return r;
@@ -93,6 +101,9 @@ G.I18n = (() => {
   /** Texto con huecos para el código: T('Nivel {x}', 5). */
   function f(es, ...vals) { let i = 0; return t(es).replace(/\{x\}/g, () => vals[i++]); }
 
+  /** A context-specific label, with the ordinary translation as fallback. */
+  function c(context, source) { return exact.get(context + '::' + source) || t(source); }
+
   // ---------------- DOM ----------------
   const ATTRS = ['placeholder', 'title', 'alt', 'aria-label'];
   const skipEl = el => !!(el && el.closest && el.closest('[translate="no"], script, style, code'));
@@ -124,7 +135,6 @@ G.I18n = (() => {
 
   function startDom() {
     initSelectors();
-    if (lang === 'es') return;
     // Los enlaces a las páginas de la web, a su versión en inglés.
     const EN_LINKS = { 'guia/': 'en/guide/', 'pokedex/': 'en/pokedex/' };
     if (lang === 'en') document.querySelectorAll('a[href]').forEach(a => { const h = a.getAttribute('href'); if (EN_LINKS[h]) a.setAttribute('href', EN_LINKS[h]); });
@@ -140,7 +150,7 @@ G.I18n = (() => {
   }
 
   // ---------------- canvas y ventanas del navegador ----------------
-  if (lang !== 'es') {
+  {
     const P = CanvasRenderingContext2D.prototype;
     for (const k of ['fillText', 'strokeText', 'measureText']) {
       const orig = P[k];
@@ -183,7 +193,7 @@ G.I18n = (() => {
     });
   }
 
-  return { lang, locale, locales, add, t, f, set, startDom, walk };
+  return { lang, locale, locales, add, t, f, c, raw, set, startDom, walk };
 
 })();
 G.T = G.I18n.t;
