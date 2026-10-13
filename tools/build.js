@@ -11,6 +11,7 @@
 const fs = require('fs'), path = require('path'), crypto = require('crypto');
 const { execFileSync } = require('child_process');
 const ROOT = path.join(__dirname, '..');
+const SITE = new URL(JSON.parse(fs.readFileSync(path.join(ROOT, 'site.config.json'), 'utf8')).url).href;
 const DEV = path.join(ROOT, 'dev.html'), OUT = path.join(ROOT, 'index.html');
 const BEGIN = '<!-- scripts:begin -->', END = '<!-- scripts:end -->';
 
@@ -39,6 +40,8 @@ html = html.replace(/<meta name="robots" content="noindex">\s*/, '');
 const SIN_SEO = process.argv.includes('--sin-seo');
 html = SIN_SEO ? html.replace(/<!-- seo:begin -->[\s\S]*?<!-- seo:end -->\n?/g, '') : html.replace(/<!-- seo:(begin|end) -->\n?/g, '');
 html = html.replace(/<!-- dev.html: página fuente[^>]*-->/, '<!-- GENERADO desde dev.html por tools/build.js: no editar a mano (se edita dev.html). -->');
+// The source keeps upstream metadata; generated pages use this fork's URL.
+html = html.replaceAll('https://pokesurvivor.com/', SITE);
 fs.writeFileSync(OUT, html);
 // Versión publicada: los jugadores la miran cada 5 min y, si cambia, el juego se
 // actualiza solo (en el menú, o al acabar la partida). Ver js/core/updater.js.

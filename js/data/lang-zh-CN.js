@@ -1296,3 +1296,10 @@ G.I18n.add({
   'Los apodos se conservan sin traducir en los avisos, el cooperativo y las confirmaciones, aunque coincidan con nombres de Pokémon.': '提示、合作模式和确认窗口中的玩家昵称保持原样，即使与宝可梦名称相同也不会被翻译。',
   'Correcciones de la traducción china: tipo Normal, movimiento Burbuja, rebotes de ataques en cadena y opción de hueco sin movimiento fijo.': '修正中文翻译：一般属性、泡沫招式、连锁攻击弹射次数，以及快捷栏的“不固定”选项。'
 }, 'zh-CN');
+
+G.I18n.add({
+  "Esta versión guarda la partida sólo en este navegador.": "本版本使用本地存档，进度仅保存在此浏览器。",
+  "Esta versión funciona en modo local: las cuentas y las partidas se guardan sólo en este navegador. No hay sincronización en la nube, inicio con Google, amigos, ranking ni partidas en grupo. Si borras los datos del sitio, pierdes el guardado local. Como invitado, el progreso se pierde al salir.": "本版本采用本地模式，账号和存档仅保存在此浏览器。不提供云端同步、Google 登录、好友、排行榜或联机。清除网站数据会删除本地存档；游客进度在退出后丢失。"
+}, 'zh-CN');
+
+G.I18n.add({"Edición offline de GitHub Pages: cuentas y partidas locales, sin servicios en la nube. También se puede descargar el ZIP para jugar sin conexión.": "GitHub Pages 离线版：使用本地账号与存档，不连接云端服务。也可下载 ZIP，在断网环境中游玩。"}, 'zh-CN');

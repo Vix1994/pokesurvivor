@@ -35,7 +35,7 @@ G.LoginUI = (() => {
     const why = G.DB.localReason === 'file'
       ? 'Abierto desde un archivo: la partida sólo se guarda en este navegador. Para guardar en la nube, juega en la versión publicada.'
       : G.DB.localReason === 'config'
-        ? 'Nube sin configurar: la partida sólo se guarda en este navegador.'
+        ? 'Esta versión guarda la partida sólo en este navegador.'
         : 'No se pudo conectar con la nube: la partida sólo se guarda en este navegador.';
     return why;
   }

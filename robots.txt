@@ -1,8 +1,8 @@
 # PokéSurvivor
 User-agent: *
-Allow: /
-Disallow: /tools/
-Disallow: /docs/
-Disallow: /dev.html
+Allow: /pokesurvivor/
+Disallow: /pokesurvivor/tools/
+Disallow: /pokesurvivor/docs/
+Disallow: /pokesurvivor/dev.html
 
-Sitemap: https://pokesurvivor.com/sitemap.xml
+Sitemap: https://vix1994.github.io/pokesurvivor/sitemap.xml

@@ -6,9 +6,11 @@
 #   en: en/ (el juego en inglés) en/guide/ en/pokedex/ en/legendaries/ ... en/news/
 #   404.html, robots.txt, sitemap.xml (con las versiones de cada idioma)
 import json, os, re, datetime, html
+from urllib.parse import urlparse
 
 ROOT = os.path.join(os.path.dirname(__file__), '..')
-SITE = 'https://pokesurvivor.com/'
+SITE = json.load(open(os.path.join(ROOT, 'site.config.json'), encoding='utf-8'))['url'].rstrip('/') + '/'
+BASE = urlparse(SITE).path
 TODAY = datetime.date.today().isoformat()
 D = json.load(open(os.path.join(ROOT, 'tools', 'cache', 'gamedata.json'), encoding='utf-8'))
 DEX = D['dex']; BY = {p['dex']: p for p in DEX}
@@ -587,6 +589,7 @@ def game_en():
     s = s.replace('"description": "Fan game gratuito de supervivencia (bullet heaven, estilo Survivor.io) con Pokémon: elige compañero, sobrevive a hordas, sube de nivel, evoluciona tus ataques, enfréntate a legendarios en grietas y juega en cooperativo con hasta 4 amigos."',
                   '"description": "A free Pokémon survival fan game (bullet heaven, Survivor.io style): pick a partner, survive the hordes, level up, evolve your moves, fight legendaries in rifts and play co-op with up to 4 friends."')
     s = s.replace('"inLanguage": "es"', '"inLanguage": ["es", "en"]')
+    s = s.replace('https://pokesurvivor.com/', SITE)
     os.makedirs(os.path.join(ROOT, 'en'), exist_ok=True)
     open(os.path.join(ROOT, 'en', 'index.html'), 'w', encoding='utf-8').write(s)
 
@@ -599,8 +602,9 @@ def extra():
 <p class="lead" lang="en">This page doesn't exist. But the hordes are still waiting…</p>
 <p class="cta"><a class="btn" href="/">Volver al juego</a> <a class="btn ghost" href="/en/">Play in English</a></p></article></main></body></html>
 '''
+    nf = nf.replace('href="/', f'href="{BASE}')
     open(os.path.join(ROOT, '404.html'), 'w', encoding='utf-8').write(nf)
-    open(os.path.join(ROOT, 'robots.txt'), 'w', encoding='utf-8').write(f'# PokéSurvivor\nUser-agent: *\nAllow: /\nDisallow: /tools/\nDisallow: /docs/\nDisallow: /dev.html\n\nSitemap: {SITE}sitemap.xml\n')
+    open(os.path.join(ROOT, 'robots.txt'), 'w', encoding='utf-8').write(f'# PokéSurvivor\nUser-agent: *\nAllow: {BASE}\nDisallow: {BASE}tools/\nDisallow: {BASE}docs/\nDisallow: {BASE}dev.html\n\nSitemap: {SITE}sitemap.xml\n')
     PRI = {'home': '1.0', 'guide': '0.8', 'pokedex': '0.7', 'legends': '0.7', 'moves': '0.6', 'types': '0.6', 'shinies': '0.6', 'achievements': '0.5', 'items': '0.5', 'news': '0.5', 'support': '0.4'}
     urls = []
     for pid in PAGES:

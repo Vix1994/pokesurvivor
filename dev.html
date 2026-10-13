@@ -41,7 +41,6 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="PokéSurvivor">
-<link rel="preconnect" href="https://www.gstatic.com" crossorigin>
 <link rel="preload" href="assets/fonts/PixelifyPS-400.ttf" as="font" type="font/ttf" crossorigin>
 <link rel="preload" href="assets/fonts/PixelifyPS-700.ttf" as="font" type="font/ttf" crossorigin>
 <!-- seo:begin -->
@@ -261,6 +260,8 @@
       antes posible: <a id="legal-mail" href="#"></a></p>
     <p>Código fuente: <a id="legal-repo" href="#" target="_blank" rel="noopener"></a></p>
     <h3>Privacidad</h3>
+    <p id="legal-local-privacy" class="hidden">Esta versión funciona en modo local: las cuentas y las partidas se guardan sólo en este navegador. No hay sincronización en la nube, inicio con Google, amigos, ranking ni partidas en grupo. Si borras los datos del sitio, pierdes el guardado local. Como invitado, el progreso se pierde al salir.</p>
+    <div id="legal-cloud-privacy">
     <p>Si creas una cuenta, guardamos tu nombre de jugador y tu partida (colección, monedas,
       mejoras y estadísticas) en Google Firebase para que puedas seguir en cualquier ordenador.
       Si entras con Google, Firebase guarda también tu correo de Google para identificarte
@@ -273,6 +274,7 @@
       (como en una videollamada), así que cada uno puede llegar a ver la dirección IP del otro.
       Juega en grupo sólo con gente que conozcas. Si la conexión directa no es posible, la partida
       pasa por los servidores de Firebase.</p>
+    </div>
     <p>Puedes borrar tu cuenta cuando quieras (se borran también tu apodo, tus amigos y tus marcas):</p>
     <div class="row">
       <button class="btn small" id="legal-delete">Borrar mi cuenta y mi partida</button>

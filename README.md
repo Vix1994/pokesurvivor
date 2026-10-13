@@ -1,5 +1,15 @@
 # PokéSurvivor · Mundo Misterioso
 
+**离线版发布分支：`gh-pages`。** `main` 继续保留现有中文开发版本；GitHub Pages 仅从此分支发布。
+
+- 在线游玩：[PokéSurvivor 中文离线版](https://vix1994.github.io/pokesurvivor/)。
+- 完整离线包：[下载 gh-pages 分支 ZIP](https://github.com/Vix1994/pokesurvivor/archive/refs/heads/gh-pages.zip)，解压后打开 `index.html`，无需安装或联网。
+- 游戏菜单中创建的账号和进度仅保存在当前浏览器；游客进度退出后丢失。此版本不提供云端存档、Google 登录、好友、排行榜或联机。
+- 在网页上游玩时，素材会按需下载和缓存。完整断网游玩请下载 ZIP；清除浏览器网站数据会删除本地存档。网页地址与本地文件的存档不会自动互通。
+
+部署与后续更新说明见 [docs/GITHUB_PAGES.md](docs/GITHUB_PAGES.md)。
+
+
 ## 关于此 fork
 
 本仓库是 [JPTER78/pokesurvivor](https://github.com/JPTER78/pokesurvivor) 的简体中文本地化 fork，中文支持相关改动维护在 [Vix1994/pokesurvivor](https://github.com/Vix1994/pokesurvivor)。原游戏由上游项目开发，素材来源、作者署名与许可见 [CREDITS.md](CREDITS.md) 和 [LICENSE](LICENSE)。

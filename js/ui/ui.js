@@ -111,6 +111,8 @@ G.UI = (() => {
     $('legal-mail').href = 'mailto:' + CONTACT + '?subject=Pok%C3%A9Survivor';
     $('legal-repo').textContent = REPO.replace('https://', '');
     $('legal-repo').href = REPO;
+    $('legal-local-privacy').classList.toggle('hidden', G.DB.mode === 'cloud');
+    $('legal-cloud-privacy').classList.toggle('hidden', G.DB.mode !== 'cloud');
     const canDelete = G.DB.loggedIn && !G.DB.guest;
     $('legal-delete').disabled = !canDelete;
     $('legal-del-msg').textContent = canDelete ? '' : 'Inicia sesión para poder borrar tu cuenta.';

@@ -570,3 +570,8 @@ G.I18n.add({
 G.I18n.add({ 'Nv. {x}': 'Lv. {x}' });
 
 G.I18n.add({ 'Nv.{x}': 'Lv. {x}' });
+
+G.I18n.add({
+  "Esta versión guarda la partida sólo en este navegador.": "This version saves your progress only in this browser.",
+  "Esta versión funciona en modo local: las cuentas y las partidas se guardan sólo en este navegador. No hay sincronización en la nube, inicio con Google, amigos, ranking ni partidas en grupo. Si borras los datos del sitio, pierdes el guardado local. Como invitado, el progreso se pierde al salir.": "This version runs locally: accounts and saves are stored only in this browser. Cloud sync, Google sign-in, friends, leaderboards and co-op are unavailable. Clearing site data deletes local saves. Guest progress is lost when you leave."
+}, 'en');

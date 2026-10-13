@@ -11,6 +11,9 @@ G.CHANGELOG = [
      'Simplified Chinese translation for Pokémon names, moves, items, menus and messages.'],
     ['Selector de idioma en el inicio de sesión y en Ajustes: español, inglés y chino simplificado. Se recuerda la elección y se detecta el idioma del navegador.',
      'Language picker on login and in Settings: Spanish, English and Simplified Chinese. Remembers your choice and detects the browser language.']
+  ], chg: [
+    ['Edición offline de GitHub Pages: cuentas y partidas locales, sin servicios en la nube. También se puede descargar el ZIP para jugar sin conexión.',
+     'GitHub Pages offline edition: local accounts and saves, without cloud services. Download the ZIP to play without an internet connection.']
   ], fix: [
     ['Cambiar el idioma durante una partida ya no recarga el juego: termina la partida primero.',
      'Changing language during a run no longer reloads the game: finish the run first.'],
